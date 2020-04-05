@@ -8,7 +8,7 @@
 2. In the `nodemailer.js` file on lines 10,11,15 write the sender's mail data (your mail).
 3. If you will not use google mail, you need to change the lines 6,7,8 in the `nodemailer.js` file.
 4. Setting up your mail: 
-- `https://myaccount.google.com/lesssecureapps`, log in using your mail / Google account. enable - untrusted applications allowed.
-- `https://accounts.google.com/b/0/displayunlockcaptcha`, after the transition click on the "continue" button. Try sending the letter.
+    - `https://myaccount.google.com/lesssecureapps`, log in using your mail / Google account. enable - untrusted applications allowed.
+    - `https://accounts.google.com/b/0/displayunlockcaptcha`, after the transition click on the "continue" button. Try sending the letter.
 > If you have a problem `https://nodemailer.com/usage/using-gmail/` .
-good luck
+### Good luck
