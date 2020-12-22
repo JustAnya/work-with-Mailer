@@ -1,7 +1,7 @@
 const nodemailer= require('nodemailer')
 
-const transporter =nodemailer.createTransport({//константа в кот будут храниться настройки почтового сервера
-    pool: true, //для большого количества оединений, можно удалить
+const transporter =nodemailer.createTransport({
+    pool: true, 
    // maxConnections: 6,
     host: 'smtp.gmail.com',
     port: 587,
@@ -16,11 +16,11 @@ const transporter =nodemailer.createTransport({//константа в кот б
     }
 ) 
 
-const mailer = message =>{//функция которая занимается отправкой email, в качестве аргумента передаём объект месседж. Объект месседж  мбудет содержать само сообщение кот мы будем отправлять клинту 
-    transporter.sendMail(message,(err,info)=>{ //в метод сендмеил аргументы сообщение и функция
-        if(err)return console.log(err)//если во время отправки сообщения произошла ошибка, то данне о ней будут выведены на консоль
-        console.log('Email sent: ', info)//если всё ок, мы увидим данные оботправленном сообщении
+const mailer = message =>{ 
+    transporter.sendMail(message,(err,info)=>{ 
+        if(err)return console.log(err)
+        console.log('Email sent: ', info)
     })
 }
 
-module.exports= mailer//экспортируем функцию мейлер, чтобы использовать её на сервере при регистрации
+module.exports= mailer
