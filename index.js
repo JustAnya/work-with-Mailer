@@ -1,17 +1,16 @@
-const express = require('express')//импортируем экспресс
+const express = require('express')
 const bodyParser = require('body-parser')
-const mailer = require('./nodemailer') //импортировали функцию мейлер
+const mailer = require('./nodemailer') 
 
-const app = express()//cозд приложение эп, с её помощью нам доступны все функции экспресс
+const app = express()
 
 const PORT = 3001 
 let user = undefined  
 
-app.use('/css', express.static (__dirname + '/node_modules/bootstrap/dist/css'))//с помощью метода юз указали путь к статической папке.1) адрес по которому будет доступна статическая папка, 2)указываем полный путь к папке на локальной машине
+app.use('/css', express.static (__dirname + '/node_modules/bootstrap/dist/css'))
 app.use(bodyParser.urlencoded({ extended: false }))
-app.post('/registration',(req,res) =>{//создаём обработчик метода пост запроса. 1) аргумент это адрес на который будут отправляться данные. 2) функция с арг рек и рес
+app.post('/registration',(req,res) =>{
     if(!req.body.email || !req.body.pass) return res.sendStatus(400)
-    // console.log(req.body)
     const message={
         to: req.body.email,
         subject: 'Congratulations! You are succefully registrated on our site',
@@ -24,25 +23,21 @@ app.post('/registration',(req,res) =>{//создаём обработчик ме
         ${req.body.promo ? `Вы подписаны на рассылку уведомлений и рабочих предложений, чтобы отписаться от рассылки перейдите по ссылке <a href="http://localhost:3001/unsubscribe/${req.body.email}"> отписаться от рассылки</a>` : ''}
         <p> Данное письмо не требует ответа.`
     }
-    mailer(message)//отправляем клиенту емейл и передаём ему объект месседж, выше он указан
+    mailer(message)
     user = req.body;
     res.redirect('/registration')
-   // res.send(`Registration completed successfully. Data sent to email: ${req.body.email}`)
 })
 
-//в метод гет передаём два параметра 1)адрес. 2)функция. При обращении по адресу клиент будет получать либо страницу либо текст. При переходе по ссылке регистрейшн будет отправлен текст на клиент. Аргументами функции являются рек и рес
+
 app.get('/registration',(req,res) => {  
-    //res.send('Registration page')
     if(typeof user!=='object')return res.sendFile(__dirname +'/registration.html')
     res.send(`Registrerion completed successfully. Data sent to email: ${user.email}`)
     user = undefined
 })
 
-app.get('/unsubscribe/:email', (req, res) => {//обработка отписки от рассылки
-    console.log(`${req.params.email} unsubscibed`)//указали емеил  виде параметра//
-    res.send(`Ваш email: ${req.params.email} удалён из списка рассылки!`)//на клиент
+app.get('/unsubscribe/:email', (req, res) => {
+    console.log(`${req.params.email} unsubscibed`)
+    res.send(`Ваш email: ${req.params.email} удалён из списка рассылки!`)
 })
-//с помощью метода лисен запускаем сервер. Необходимо передать порт на котором будем поднимать сервер и второй аргумент это функция которая будет выводить сообщение о том что сервер работает и ссылку на страницу.
+
 app.listen(PORT,() => console.log('server listening at http://localhost:3001/registration'))
-//${PORT}- позволяет выводить значение переменной
-//Made using the video course "https://www.youtube.com/watch?v=z1oW-iyHvA0"
